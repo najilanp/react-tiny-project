@@ -1,13 +1,12 @@
+import "./App.css";
 import React,{ useRef } from 'react';
-import {useState,useEffect} from "react";
-import FbCreate from "./FbCreate";
-
-
+// import {useState,useEffect} from "react";
+// import FbCreate from "./FbCreate";
 import { Editor } from '@tinymce/tinymce-react';
-import firebase from "./Firebase";
+// import firebase from "./Firebase";
+import { Button } from 'antd';
 
-const ref = firebase.firestore().collection("Developers")
-
+// const ref = firebase.firestore().collection("Developers")
 
 
 export default function App() {
@@ -20,26 +19,25 @@ export default function App() {
   };
 
 
-  const [data, setdata] = useState([])
-  const [loader, setloader] = useState(true)
+  // const [data, setdata] = useState([])
+  // const [loader, setloader] = useState(true)
 
-  function getData(){
-    ref.onSnapshot((querySnapshot) => {
-      const items = []
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data())
-      })
-      console.log(items);
-      setdata(items)
-      setloader(false)
-    })
-  }
+  // function getData(){
+  //   ref.onSnapshot((querySnapshot) => {
+  //     const items = []
+  //     querySnapshot.forEach((doc) => {
+  //       items.push(doc.data())
+  //     })
+  //     console.log(items);
+  //     setdata(items)
+  //     setloader(false)
+  //   })
+  // }
 
-  useEffect(() => {
-    getData()
+  // useEffect(() => {
+  //   getData()
   
-  }, [])
-
+  // }, [])
 
 
 
@@ -47,7 +45,8 @@ export default function App() {
 
     <>
 
-<div className="App">
+{/* <div className="App">
+
    <h1>Heloo Developers</h1>
 
     {loader === false ?
@@ -67,7 +66,7 @@ export default function App() {
 
     
   
-   </div>
+   </div> */}
 
 
 
@@ -91,12 +90,17 @@ export default function App() {
           'removeformat | help',
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         }}
+
       />
+
+      <Button type="primary">Primary Button</Button>
+
+
     </>
   );
       }
 
-      export {ref};
+      // export {ref};
 
   
 
