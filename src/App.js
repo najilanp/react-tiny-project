@@ -15,7 +15,7 @@ import { Form, Button, Input } from 'antd';
 export default function App() {
 
     const onFinish = (e) => {
-      console.log(e)
+      console.log(e.target.value)
     }
   
 
@@ -26,6 +26,12 @@ export default function App() {
     }
   };
 
+
+  function handleupdate(editor){
+    const editorContent = editor.getContent();
+
+    console.log(editorContent)
+  }
 
   // const [data, setdata] = useState([])
   // const [loader, setloader] = useState(true)
@@ -84,6 +90,7 @@ export default function App() {
 
         apikey ="x1fnjj8px72i05pckeykdwjpwyam829iii5rxvsm962o4jdd"
         onInit={(evt, editor) => editorRef.current = editor}
+        onEditorChange={handleupdate}
         initialValue="<p>qwertyuiop</p>"
         init={{
           height: 500,
