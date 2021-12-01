@@ -4,12 +4,20 @@ import React,{ useRef } from 'react';
 // import FbCreate from "./FbCreate";
 import { Editor } from '@tinymce/tinymce-react';
 // import firebase from "./Firebase";
-import { Button } from 'antd';
+import { Form, Button, Input } from 'antd';
 
 // const ref = firebase.firestore().collection("Developers")
 
 
+
+
+
 export default function App() {
+
+    const onFinish = (e) => {
+      console.log(e)
+    }
+  
 
   const editorRef = useRef(null);
   const log = () => {
@@ -45,7 +53,7 @@ export default function App() {
 
     <>
 
-{/* <div className="App">
+ {/* <div className="App"> 
 
    <h1>Heloo Developers</h1>
 
@@ -64,12 +72,13 @@ export default function App() {
 
     <FbCreate />
 
+    </div> 
+    */}
+
+
+<Form onFinish={onFinish}>
     
-  
-   </div> */}
-
-
-
+<Form.Item>
 
       <Editor
 
@@ -92,19 +101,20 @@ export default function App() {
         }}
 
       />
+      
+      </Form.Item>
+ 
 
-      <Button type="primary">Primary Button</Button>
-
+<Form.Item>
+        <Button type="primary"htmlType="submit">
+          Submit
+        </Button>
+</Form.Item>
+</Form>
 
     </>
+    
   );
-      }
+  }
 
       // export {ref};
-
-  
-
-
-
-
-  
