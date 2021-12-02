@@ -100,14 +100,14 @@ useEffect(()=>{
    {/* <h1>Heloo Developers</h1>  */}
 
      {loader === false ?
-    (data.map((dev1) => (
+    (data.map((guide1) => (
 
      
       
       
     <div>
 
-      <h1>name: {dev1.name}</h1>
+      <h1> {guide1.content}</h1>
     </div>
       
 
