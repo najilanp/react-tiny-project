@@ -4,8 +4,9 @@ import React ,{useState, useRef,useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import firebase from "./Firebase";
 import { Form, Button, Input } from 'antd';
+import { tSDeclareFunction } from "@babel/types";
 
-const ref = firebase.firestore().collection("Guides")
+const ref = firebase.firestore().collection("guides")
 
 
 
@@ -14,6 +15,8 @@ const ref = firebase.firestore().collection("Guides")
 export default function App() {
 
   const [content, setContent] = useState('');
+
+  const [initial,setInitial] = useState('')
 
 
 
@@ -28,23 +31,59 @@ export default function App() {
   //   })
      
   // }
+useEffect(()=>{
+
+  getData()
+// ref.doc('guide1').get().then((result)=>{
+
+//  console.log(result)
+//   setInitial(result.content)
+// })
+},[])
 
 
+/**To get the initial data */
+function getData(){
+
+  ref.onSnapshot((querySnapshot) => {
+    const items = []
+    querySnapshot.forEach((doc) => {
+      items.push(doc.data())
+    })
+    console.log(items);
+    setInitial(items[0].content)
+    // setloader(false)
+  })
+}
 
      const submit = (e) => {
       //  console.log(editorRef.current.getContent())
             var newContent=editorRef.current.getContent()
             console.log(newContent);
-            setContent(newContent);
-            ref
-      .doc()
-      .set(newContent)
-      .catch((err) =>{
-        alert(err);
-        console.log(err);
-      })
+
+           
+              ref
+              .doc('guide1')
+              .update({
+                content:newContent
+              }).then(()=>
+              setContent(newContent)
+             // getContent();
+              )
+              
+            
+
+            
+           
      }
+
   
+
+     
+console.log(content)
+ 
+      
+     
 
     const editorRef = useRef();
   //       const submit = () => {
@@ -63,32 +102,16 @@ export default function App() {
 
 const handleUpdate = (value, editor) => {
     const editorContent = editor.getContent();
-    setContent(editorContent);
+    //setContent(editorContent);
 };
 
 
 
-  function handleupdate(editor){
-    const editorContent = editorRef.current.getContent()
-    ;
-
-    console.log(editorContent)
-  }
 
   // const [data, setdata] = useState([])
   // const [loader, setloader] = useState(true)
 
-  // function getData(){
-  //   ref.onSnapshot((querySnapshot) => {
-  //     const items = []
-  //     querySnapshot.forEach((doc) => {
-  //       items.push(doc.data())
-  //     })
-  //     console.log(items);
-  //     setdata(items)
-  //     setloader(false)
-  //   })
-  // }
+  
 
   // useEffect(() => {
   //   getData()
@@ -133,8 +156,8 @@ console.log(content);
         apikey ="x1fnjj8px72i05pckeykdwjpwyam829iii5rxvsm962o4jdd"
         onInit={(evt, editor) => editorRef.current = editor}
         // onInit={handleInit}
-        onEditorChange={handleUpdate}
-        initialValue="<p>qwertyuiop</p>"
+        // onEditorChange={handleUpdate}
+        initialValue={initial}
         init={{
           selector: 'textarea',
           height: 500,
