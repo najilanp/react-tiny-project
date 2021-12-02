@@ -1,12 +1,11 @@
 import "./App.css";
-import React,{ useRef } from 'react';
-// import {useState,useEffect} from "react";
+import React ,{useState, useRef,useEffect } from 'react';
 // import FbCreate from "./FbCreate";
 import { Editor } from '@tinymce/tinymce-react';
-// import firebase from "./Firebase";
+import firebase from "./Firebase";
 import { Form, Button, Input } from 'antd';
 
-// const ref = firebase.firestore().collection("Developers")
+const ref = firebase.firestore().collection("Guides")
 
 
 
@@ -14,21 +13,64 @@ import { Form, Button, Input } from 'antd';
 
 export default function App() {
 
-    const onFinish = (e) => {
-      console.log(e.target.value)
-    }
+  const [content, setContent] = useState('');
+
+
+
+  // function createDoc(newDataObj){
+      
+  //   ref
+  //   .doc()
+  //   .set(newDataObj)
+  //   .catch((err) =>{
+  //     alert(err);
+  //     console.log(err);
+  //   })
+     
+  // }
+
+
+
+     const submit = (e) => {
+      //  console.log(editorRef.current.getContent())
+            var newContent=editorRef.current.getContent()
+            console.log(newContent);
+            setContent(newContent);
+            ref
+      .doc()
+      .set(newContent)
+      .catch((err) =>{
+        alert(err);
+        console.log(err);
+      })
+     }
   
 
-  const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
+    const editorRef = useRef();
+  //       const submit = () => {
+  //      if (editorRef.current) {
+    
+  //      console.log(editorRef.current.getContent());
+  //      }
+ 
+  //  };
+
+//   const handleInit = (evt, editor) => {
+//     setContent(editor.getContent());
+// };
+
+
+
+const handleUpdate = (value, editor) => {
+    const editorContent = editor.getContent();
+    setContent(editorContent);
+};
+
 
 
   function handleupdate(editor){
-    const editorContent = editor.getContent();
+    const editorContent = editorRef.current.getContent()
+    ;
 
     console.log(editorContent)
   }
@@ -54,35 +96,35 @@ export default function App() {
   // }, [])
 
 
-
+console.log(content);
   return (
 
     <>
 
- {/* <div className="App"> 
+  {/* <div className="App">  */}
 
-   <h1>Heloo Developers</h1>
+   {/* <h1>Heloo Developers</h1> */}
 
-    {loader === false ?
+    {/* {loader === false ?
     (data.map((dev) => (
       
    
       <div>
-        <h1>Name : {dev.name}</h1>
-        <p>Skill : {dev.skill}</p>
+
       
+
      </div> 
     
     
-    ))):null}
+    ))):null}  */}
 
-    <FbCreate />
+    {/* <FbCreate /> */}
 
-    </div> 
-    */}
+    {/* </div>  */}
+    
 
 
-<Form onFinish={onFinish}>
+<Form onFinish={submit} >
     
 <Form.Item>
 
@@ -90,9 +132,11 @@ export default function App() {
 
         apikey ="x1fnjj8px72i05pckeykdwjpwyam829iii5rxvsm962o4jdd"
         onInit={(evt, editor) => editorRef.current = editor}
-        onEditorChange={handleupdate}
+        // onInit={handleInit}
+        onEditorChange={handleUpdate}
         initialValue="<p>qwertyuiop</p>"
         init={{
+          selector: 'textarea',
           height: 500,
           menubar: false,
           plugins: [
@@ -108,11 +152,12 @@ export default function App() {
         }}
 
       />
+
       
       </Form.Item>
  
-
-<Form.Item>
+ 
+<Form.Item >
         <Button type="primary"htmlType="submit">
           Submit
         </Button>
