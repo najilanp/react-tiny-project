@@ -3,14 +3,13 @@ import firebase from "firebase";
 import "firebase/firestore"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCxpc4xJrj0ZU9z2bs5TQviIgGG4rLIpY4",
-    authDomain: "react-tinymce.firebaseapp.com",
-    projectId: "react-tinymce",
-    storageBucket: "react-tinymce.appspot.com",
-    messagingSenderId: "689986131799",
-    appId: "1:689986131799:web:b5126df3cb39f1eb97d012"
-  };
-
+  apiKey: "AIzaSyD-ReNZ4vH3mxljZHWhfy30wcsotdBWgB4",
+  authDomain: "fir-c980e.firebaseapp.com",
+  projectId: "fir-c980e",
+  storageBucket: "fir-c980e.appspot.com",
+  messagingSenderId: "337451607003",
+  appId: "1:337451607003:web:91fe27b6c0db39fced3dfe"
+};
   
   firebase.initializeApp(firebaseConfig)
 

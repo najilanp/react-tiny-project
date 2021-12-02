@@ -1,49 +1,45 @@
 import "./App.css";
 import React ,{useState, useRef,useEffect } from 'react';
-// import FbCreate from "./FbCreate";
 import { Editor } from '@tinymce/tinymce-react';
 import firebase from "./Firebase";
-import { Form, Button, Input } from 'antd';
-import { tSDeclareFunction } from "@babel/types";
+import { Form, Button} from 'antd';
+// import { tSDeclareFunction } from "@babel/types";
 
-const ref = firebase.firestore().collection("guides")
-
-
-
+// const ref = firebase.firestore().collection("guides")
+const ref = firebase.firestore().collection("developers")
 
 
 export default function App() {
 
   const [content, setContent] = useState('');
-
   const [initial,setInitial] = useState('')
+  const [data, setdata] = useState([])
+  const [loader, setloader] = useState(true)
 
 
 
-  // function createDoc(newDataObj){
-      
-  //   ref
-  //   .doc()
-  //   .set(newDataObj)
-  //   .catch((err) =>{
-  //     alert(err);
-  //     console.log(err);
-  //   })
-     
-  // }
-useEffect(()=>{
+  function getData(){
+    ref.onSnapshot((querySnapshot) => {
+      const items = []
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data())
+      })
+      console.log(items);
+      setdata(items)
+      setloader(false)
+    })
+  }
 
-  getData()
-// ref.doc('guide1').get().then((result)=>{
+  useEffect(() => {
+    getData()
+  
+  }, [])
 
-//  console.log(result)
-//   setInitial(result.content)
-// })
-},[])
+
 
 
 /**To get the initial data */
-function getData(){
+// function getData(){
 
   ref.onSnapshot((querySnapshot) => {
     const items = []
@@ -52,14 +48,23 @@ function getData(){
     })
     console.log(items);
     setInitial(items[0].content)
-    // setloader(false)
+    
   })
-}
+// }
+
+
+useEffect(()=>{
+
+  getData()
+
+},[])
+
+    const editorRef = useRef();
 
      const submit = (e) => {
-      //  console.log(editorRef.current.getContent())
-            var newContent=editorRef.current.getContent()
-            console.log(newContent);
+
+      var newContent=editorRef.current.getContent()
+    //         // console.log(newContent);
 
            
               ref
@@ -69,85 +74,53 @@ function getData(){
               }).then(()=>
               setContent(newContent)
              // getContent();
-              )
-              
-            
-
-            
+              ) 
            
      }
+   
+// console.log(content)
 
-  
-
-     
-console.log(content)
- 
-      
-     
-
-    const editorRef = useRef();
-  //       const submit = () => {
-  //      if (editorRef.current) {
-    
-  //      console.log(editorRef.current.getContent());
-  //      }
- 
-  //  };
-
-//   const handleInit = (evt, editor) => {
-//     setContent(editor.getContent());
+// const handleUpdate = (value, editor) => {
+//     const editorContent = editor.getContent();
+//     setContent(editorContent);
 // };
 
-
-
-const handleUpdate = (value, editor) => {
-    const editorContent = editor.getContent();
-    //setContent(editorContent);
-};
+// console.log(content);
 
 
 
 
-  // const [data, setdata] = useState([])
-  // const [loader, setloader] = useState(true)
 
-  
-
-  // useEffect(() => {
-  //   getData()
-  
-  // }, [])
-
-
-console.log(content);
   return (
 
-    <>
+     <>
 
-  {/* <div className="App">  */}
+  <div className="App">  
 
-   {/* <h1>Heloo Developers</h1> */}
+   {/* <h1>Heloo Developers</h1>  */}
 
-    {/* {loader === false ?
-    (data.map((dev) => (
+     {loader === false ?
+    (data.map((dev1) => (
+
+     
       
-   
-      <div>
+      
+    <div>
 
+      <h1>name: {dev1.name}</h1>
+    </div>
       
 
-     </div> 
-    
-    
-    ))):null}  */}
+      
+     ))):null} 
 
-    {/* <FbCreate /> */}
-
-    {/* </div>  */}
     
 
+     </div>  
 
-<Form onFinish={submit} >
+
+
+<Form onFinish={submit}> 
     
 <Form.Item>
 
@@ -176,7 +149,6 @@ console.log(content);
 
       />
 
-      
       </Form.Item>
  
  
@@ -185,11 +157,11 @@ console.log(content);
           Submit
         </Button>
 </Form.Item>
-</Form>
+</Form> 
 
-    </>
-    
+
+
+</>    
   );
   }
 
-      // export {ref};
