@@ -5,7 +5,6 @@ import firebase from "./Firebase";
 import { Form, Button} from 'antd';
 // import { tSDeclareFunction } from "@babel/types";
 
-// const ref = firebase.firestore().collection("guides")
 const ref = firebase.firestore().collection("developers")
 
 
@@ -36,35 +35,33 @@ export default function App() {
   }, [])
 
 
-
-
 /**To get the initial data */
 // function getData(){
 
-  ref.onSnapshot((querySnapshot) => {
-    const items = []
-    querySnapshot.forEach((doc) => {
-      items.push(doc.data())
-    })
-    console.log(items);
-    setInitial(items[0].content)
+//   ref.onSnapshot((querySnapshot) => {
+//     const items = []
+//     querySnapshot.forEach((doc) => {
+//       items.push(doc.data())
+//     })
+//     console.log(items);
+//     setInitial(items[0].content)
     
-  })
+//   })
 // }
 
 
-useEffect(()=>{
+// useEffect(()=>{
 
-  getData()
+//   getData()
 
-},[])
+// },[])
 
     const editorRef = useRef();
 
      const submit = (e) => {
 
       var newContent=editorRef.current.getContent()
-    //         // console.log(newContent);
+             // console.log(newContent);
 
            
               ref
@@ -88,39 +85,26 @@ useEffect(()=>{
 // console.log(content);
 
 
-
-
-
   return (
 
      <>
 
   <div className="App">  
 
-   {/* <h1>Heloo Developers</h1>  */}
-
      {loader === false ?
-    (data.map((guide1) => (
-
-     
+       (data.map((guide1) => (  
       
-      
-    <div>
+          <div>
+           {/* dangerouslySetInnerHTML={{__html: "<p>{guide1.content}<p>"}}  */}
 
-      <h1> {guide1.content}</h1>
-    </div>
-      
-
+               {guide1.content}
+          </div>
       
      ))):null} 
 
-    
-
      </div>  
 
-
-
-<Form onFinish={submit}> 
+<Form onFinish={submit}>  
     
 <Form.Item>
 
@@ -150,7 +134,7 @@ useEffect(()=>{
       />
 
       </Form.Item>
- 
+
  
 <Form.Item >
         <Button type="primary"htmlType="submit">
@@ -158,7 +142,6 @@ useEffect(()=>{
         </Button>
 </Form.Item>
 </Form> 
-
 
 
 </>    
